@@ -30,7 +30,8 @@ public class ContactPageTest extends TestBase{
 	public void addNewContactTest(String title,String firstName,String lastName,String company){
 		homePage.peformClickonNewContact();
 		contactsPage.fillNewContactForm(title,firstName,lastName,company);	
-	}
+		}
+		
 	
 	@DataProvider
 	public Object[][] provideTestData() throws ExceptionHandlingUtility{

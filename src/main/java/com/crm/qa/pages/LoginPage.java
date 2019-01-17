@@ -10,7 +10,7 @@ import com.crm.qa.base.TestBase;
 public class LoginPage extends TestBase {
 
 	//PageFactory
-	@FindBy(name = "username123")
+	@FindBy(name = "username")
 	WebElement username;
 
 	By submit = By.xpath("//div[@class='input-group-btn']/input");

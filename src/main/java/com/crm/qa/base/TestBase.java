@@ -14,13 +14,11 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import com.crm.qa.util.TestUtil;
@@ -30,6 +28,8 @@ public abstract class TestBase {
 
 	public static WebDriver driver;
 	public static Properties prop;
+	
+	private static DesiredCapabilities capability;
 
 
 
@@ -37,7 +37,7 @@ public abstract class TestBase {
 
 		try{
 			prop = new Properties();
-			FileInputStream file = new FileInputStream("C:\\Users\\709003\\workspace\\FreeCRMTest\\src\\main\\java\\com\\crm\\qa\\config\\config.properties");
+			FileInputStream file = new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\com\\crm\\qa\\config\\config.properties");
 			prop.load(file);
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
@@ -58,17 +58,17 @@ public abstract class TestBase {
 
 		switch(browserName){
 		case "chrome" : {
-			System.setProperty("webdriver.chrome.driver", "C:\\Users\\709003\\workspace\\BrowserExes\\chromedriver_win32_2.41\\chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\BrowserExes\\chromedriver.exe");
 			driver = new ChromeDriver();
 			break;
 		}
 		case "gecko" : {
-			System.setProperty("webdriver.chrome.driver", "C:\\Users\\709003\\workspace\\BrowserExes\\geckodriver-v0.22.0-win64");
+			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\BrowserExes\\GeckoDriver.exe");
 			driver = new FirefoxDriver();
 			break;
 		}
 		case "ie" : {
-			System.setProperty("webdriver.chrome.driver", "C:\\Users\\709003\\workspace\\BrowserExes\\chromedriver_win32");
+			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\BrowserExes\\IEDriver.exe");
 			driver = new InternetExplorerDriver();
 			break;
 		}
@@ -81,21 +81,23 @@ public abstract class TestBase {
 		driver = eDriver;
 	
 
-		driver.manage().window().maximize();
+		//driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().pageLoadTimeout(TestUtil.page_timeout, TimeUnit.SECONDS);
 		driver.manage().timeouts().implicitlyWait(TestUtil.implicit_wait, TimeUnit.SECONDS);
 
-		       
-			
-		
-		
 		driver.get(prop.getProperty("url"));
 
 	}
 
-
-
+/*	public DesiredCapabilities setDesiredCapability()
+	{
+	capability = new DesiredCapabilities();
+	capability.setPlatform(Platform.WINDOWS);
+	
+	return capability;
+		
+	}*/
 
 
 }
